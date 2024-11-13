@@ -31,7 +31,7 @@ resource "aws_instance" "instance" {
 
 data "aws_route53_zone" "selected" {
   name         = "aligntune.online"
-  private_zone = true
+  private_zone = false
 }
 
 resource "aws_route53_record" "record" {
