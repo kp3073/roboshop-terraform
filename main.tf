@@ -40,7 +40,7 @@ variable "comopnent" {
 resource "aws_route53_record" "record" {
   count = length(var.component)
   zone_id = data.aws_route53_zone.selected.id
-  name    = "${element(var.comopnent, count.index)} -dev"
+  name    = "${element(var.component, count.index)} -dev"
   type    = "A"
   ttl     = 30
   records = [element(aws_instance.instance.*.private_ip, count.index )]
@@ -55,7 +55,7 @@ resource "null_resource" "local" {
       password = "DevOps321"
     }
     inline = [
-      "set-hostname-${element(var.comopnent, count.index)}"
+      "set-hostname-${element(var.component, count.index)}"
         ]
       }
 }
