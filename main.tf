@@ -34,9 +34,6 @@ data "aws_route53_zone" "selected" {
   private_zone = true
 }
 
-variable "comopnent" {
-  default = ""
-}
 resource "aws_route53_record" "record" {
   count = length(var.component)
   zone_id = data.aws_route53_zone.selected.id
