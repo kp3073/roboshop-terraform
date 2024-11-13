@@ -47,6 +47,7 @@ resource "aws_route53_record" "record" {
 }
 
 resource "null_resource" "local" {
+  count = length(var.component)
   provisioner "remote-exec" {
     connection {
       host = element(aws_instance.instance.*.private_ip, count.index)
