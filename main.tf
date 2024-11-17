@@ -1,5 +1,6 @@
 variable "component" {
   default = [
+    "frontend",
     "catalogue",
     "user",
     "cart",
@@ -17,12 +18,12 @@ data "aws_ami" "ami" {
   most_recent = true
   name_regex  = "Centos-8-DevOps-Practice"
   owners = ["973714476881"]
-  }
+}
 
 resource "aws_instance" "instance" {
   count = length(var.component)
-  ami                     = data.aws_ami.ami.id
-  instance_type           = "t3.micro"
+  ami           = data.aws_ami.ami.id
+  instance_type = "t3.micro"
   vpc_security_group_ids = ["sg-006eca25fc0b7619d"]
   tags = {
     Name = element(var.component, count.index)
