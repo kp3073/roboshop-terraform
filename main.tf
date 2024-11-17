@@ -1,18 +1,19 @@
-variable "component" {
+variable "components" {
   default = [
     "frontend",
+    "cart",
     "catalogue",
     "user",
-    "cart",
-    "shipping",
     "payment",
-    "mongodb",
+    "shipping",
+    "dispatch",
     "mysql",
     "rabbitmq",
     "redis",
-    "dispatch",
+    "mongodb",
   ]
 }
+
 
 data "aws_ami" "ami" {
   most_recent = true
@@ -20,28 +21,28 @@ data "aws_ami" "ami" {
   owners = ["973714476881"]
 }
 
+
 resource "aws_instance" "instance" {
-  count = length(var.component)
+  count = length(var.components)
   ami           = data.aws_ami.ami.id
   instance_type = "t3.micro"
   vpc_security_group_ids = ["sg-006eca25fc0b7619d"]
   tags = {
-    Name = element(var.component, count.index)
+    Name = element(var.components, count.index)
   }
 }
 
-
 resource "aws_route53_record" "record" {
-  count = length(var.component)
+  count = length(var.components)
   zone_id = "Z03008653NMBFHGJP7YNJ"
-  name    = "${element(var.component, count.index)}-dev"
+  name    = "${element(var.components, count.index)}-dev"
   type    = "A"
   ttl     = 30
   records = [element(aws_instance.instance.*.private_ip, count.index)]
 }
 
-resource "null_resource" "local" {
-  count = length(var.component)
+resource "null_resource" "set-hostname" {
+  count = length(var.components)
   provisioner "remote-exec" {
     connection {
       host = element(aws_instance.instance.*.private_ip, count.index)
@@ -49,7 +50,7 @@ resource "null_resource" "local" {
       password = "DevOps321"
     }
     inline = [
-      "set-hostname -skip-apply ${var.component[count.index]}"
+      "set-hostname -skip-apply ${var.components[count.index]}"
     ]
   }
 }
