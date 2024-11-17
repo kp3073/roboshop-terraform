@@ -30,14 +30,10 @@ resource "aws_instance" "instance" {
   }
 }
 
-data "aws_route53_zone" "selected" {
-  name         = "aligntune.online"
-  private_zone = false
-}
 
 resource "aws_route53_record" "record" {
   count = length(var.component)
-  zone_id = data.aws_route53_zone.selected.id
+  zone_id = "Z03008653NMBFHGJP7YNJ"
   name    = "${element(var.component, count.index)}-dev"
   type    = "A"
   ttl     = 30
