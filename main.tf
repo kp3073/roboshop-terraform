@@ -2,15 +2,15 @@ variable "components" {
   default = [
     "frontend",
     "cart",
-    "catalogue",
-    "user",
-    "payment",
-    "shipping",
-    "dispatch",
-    "mysql",
-    "rabbitmq",
-    "redis",
-    "mongodb",
+    #     "catalogue",
+    #     "user",
+    #     "payment",
+    #     "shipping",
+    #     "dispatch",
+    #     "mysql",
+    #     "rabbitmq",
+    #     "redis",
+    #     "mongodb",
   ]
 }
 
