@@ -2,7 +2,7 @@ variable "components" {
   default = [
     "frontend",
     "cart",
-    "catalogue",
+    #     "catalogue",
     "user",
     "payment",
     "shipping",
