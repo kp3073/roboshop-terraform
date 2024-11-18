@@ -4,11 +4,11 @@ variable "components" {
     "cart",
     "catalogue",
     "user",
-    #     "payment",
-    #     "shipping",
-    #     "dispatch",
-    #     "mysql",
-    #     "rabbitmq",
+    "payment",
+    "shipping",
+    "dispatch",
+    "mysql",
+    "rabbitmq",
     "redis",
     "mongodb",
   ]
@@ -25,7 +25,7 @@ data "aws_ami" "ami" {
 resource "aws_instance" "instance" {
   count = length(var.components)
   ami           = data.aws_ami.ami.id
-  instance_type = "t3.small"
+  instance_type = "t3.micro"
   vpc_security_group_ids = ["sg-006eca25fc0b7619d"]
   tags = {
     Name = element(var.components, count.index)
