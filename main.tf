@@ -25,7 +25,7 @@ data "aws_ami" "ami" {
 resource "aws_instance" "instance" {
   count = length(var.components)
   ami           = data.aws_ami.ami.id
-  instance_type = "t3.micro"
+  instance_type = "t3.small"
   vpc_security_group_ids = ["sg-006eca25fc0b7619d"]
   tags = {
     Name = element(var.components, count.index)
