@@ -1,16 +1,16 @@
 variable "components" {
   default = [
-    "frontend",
-    "cart",
-    "catalogue",
-    "user",
-    "payment",
-    "shipping",
-    "dispatch",
-    "mysql",
-    "rabbitmq",
-    "redis",
-    "mongodb",
+	"frontend",
+	"cart",
+	"catalogue",
+	"user",
+	"payment",
+	"shipping",
+	"dispatch",
+	"mysql",
+	"rabbitmq",
+	"redis",
+	"mongodb",
   ]
 }
 
@@ -28,7 +28,7 @@ resource "aws_instance" "instance" {
   instance_type = "t3.micro"
   vpc_security_group_ids = ["sg-006eca25fc0b7619d"]
   tags = {
-    Name = element(var.components, count.index)
+	Name = element(var.components, count.index)
   }
 }
 
@@ -44,13 +44,13 @@ resource "aws_route53_record" "record" {
 resource "null_resource" "set-hostname" {
   count = length(var.components)
   provisioner "remote-exec" {
-    connection {
-      host = element(aws_instance.instance.*.private_ip, count.index)
-      user     = "root"
-      password = "DevOps321"
-    }
-    inline = [
-      "set-hostname -skip-apply ${var.components[count.index]}"
-    ]
+	connection {
+	  host = element(aws_instance.instance.*.private_ip, count.index)
+	  user     = "root"
+	  password = "DevOps321"
+	}
+	inline = [
+	  "set-hostname -skip-apply ${var.components[count.index]}"
+	]
   }
 }
